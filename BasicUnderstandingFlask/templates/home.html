@@ -1,0 +1,28 @@
+{% include 'base.html'%}
+
+<html>
+<head>
+    <title>
+        Meet Mr:Flask
+    </title>
+</head>
+    
+<div class="container">
+    <div class="jumbotron text-center bg-dark my-4 animate__animated animate__lightSpeedInRight">
+        <p class="lead text-light">
+                Hello Boys and Girls ! Welcome to meet FlaskMan!!!!
+        </p>
+        <hr class="bg-light">
+        <p class="lead text-light">
+            Do you like to meet FlaskMan?
+        </p>
+        <a href="{{ url_for('signup') }}" class="btn btn-sm btn-primary">SignUp</a>
+        <hr class="bg-light">
+        <p class="lead text-light">
+            Already Met FlaskMan?
+        </p>
+        <a href="" class="btn btn-sm btn-primary">SignIn</a>
+    </div>
+</div>
+    
+</html>

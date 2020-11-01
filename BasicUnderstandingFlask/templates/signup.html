@@ -1,0 +1,61 @@
+{% include 'base.html' %}
+
+<div class="container">
+    <div class="container m-sm-1 m-md-2 m-lg-3 m-xl-4">
+        <form class="m-3 p-3" method="POST">
+          {{ form.hidden_tag() }}
+            <div class="form-group">
+              <label for="formGroupExampleInput">{{form.Name.label}}</label>
+              <!-- <input type="text" class="form-control" name= "fname" id="formGroupExampleInput" placeholder="Enter First Name"> -->
+              {{form.Name(class="form-control")}}
+              {% if form.Name.errors %}
+              <ul class="text-danger">
+                {% for error in form.Name.errors %}
+                  <li>{{ error }}</li>
+                  {% endfor %}
+              </ul>
+          {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="formGroupExampleInput2">{{form.Email.label}}</label>
+                <!-- <input type="text" class="form-control" name="email" id="formGroupExampleInput2" placeholder="Enter Email Address"> -->
+                {{form.Email(class="form-control")}}
+                {% if form.Email.errors %}
+                <ul class="text-danger">
+                  {% for error in form.Email.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+              </div>
+              <div class="form-group">
+                <label for="formGroupExampleInput2">{{form.password.label}}</label>
+                <!-- <input type="text" class="form-control" name="pwd" id="formGroupExampleInput2" placeholder="Password"> -->
+                {{form.password(class="form-control")}}
+                {% if form.password.errors %}
+                <ul class="text-danger">
+                  {% for error in form.password.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+              </div>
+              <div class="form-group">
+                <label for="formGroupExampleInput2">{{form.confirmpassword.label}}</label>
+                <!-- <input type="text" class="form-control" name="pwd1" id="formGroupExampleInput2" placeholder="Confirm Password"> -->
+                {{form.confirmpassword(class="form-control")}}
+                {% if form.confirmpassword.errors %}
+                <ul class="text-danger">
+                  {% for error in form.confirmpassword.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+              </div>
+              <div class="text-center">
+                  <input type="submit" href="" class="btn btn-lg btn-primary py-2" value=" Meet FlaskMan!">
+                     
+              </div>
+          </form>
+    </div>
+</div>
