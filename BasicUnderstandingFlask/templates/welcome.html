@@ -1,0 +1,43 @@
+{% include 'base.html' %}
+
+<div class="container">
+    <div class="jumbotron my-3">
+        <h6 class="text-success border border-dark my-3 p-2">
+            Welcome <span class="ont-weight-bold text-primary">{{name}}</span> , One more step to be completed to meet flaskman!!!!
+        </h6>
+
+        <div class="container my-2">
+            <p class="lead font-weight-bold my-3">
+                Below topics FlaskMan can answer, Please choose one or more you intrested
+            </p>
+            <form action="" method="POST">
+                <div class="form-check">
+                    <input class="form-check-input" name="lang" type="checkbox" value="Python" id="defaultCheck1">
+                    <label class="form-check-label" for="defaultCheck1">
+                    Python
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" name="lang" type="checkbox" value="Django" id="defaultCheck1">
+                    <label class="form-check-label" for="defaultCheck1">
+                    Django
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" name="lang" type="checkbox" value="Flask" id="defaultCheck1">
+                    <label class="form-check-label" for="defaultCheck1">
+                    Flask
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" name="lang" type="checkbox" value="Fast Api" id="defaultCheck1">
+                    <label class="form-check-label" for="defaultCheck1">
+                        Fast Api
+                    </label>
+                </div>
+                <input class="btn btn-sm btn-primary my-3" type="Submit" value="Go!">
+            </form>
+        </div>
+        
+    </div>
+</div>

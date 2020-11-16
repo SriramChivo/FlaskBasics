@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField,SubmitField,PasswordField
+from wtforms import StringField,SubmitField,PasswordField,TextAreaField
 # from wtforms.fields.html5 import EmailField or commonly use stringfield with email as validators
 from wtforms.validators import (input_required,
                                 Email,
@@ -20,3 +20,11 @@ class MyFirstBasicForm(FlaskForm):
     def validate_Name(self,field):
         if(len(field.data)<5):
             raise ValidationError("Enter a name not a nickname with lesser charaters")
+
+class postform(FlaskForm):
+    title=StringField("Title of the Post",validators=[input_required()])
+    description=TextAreaField("Description of the Post",validators=[input_required()])
+
+    def validate_description(self,field):
+        if len(field.data)<10:
+            return ValidationError("Description is too short to post")
