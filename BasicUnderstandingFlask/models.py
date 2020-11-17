@@ -1,7 +1,6 @@
 # from model_intialize import db
-from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.ext.hybrid import hybrid_property
-db=SQLAlchemy()
+from BasicUnderstandingFlask import db
 class User(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
