@@ -1,22 +1,53 @@
-from flask import Flask,render_template,url_for,request,redirect,make_response,session,Blueprint
+from flask import Flask,render_template,url_for,request,redirect,make_response,session,Blueprint,current_app
 from .forms import MyFirstBasicForm,postform
-from BasicUnderstandingFlask import db
+from BasicUnderstandingFlask import db,app
 from .models import User,comments,Post
-
+from flask_login import login_required,login_user,logout_user
 
 basic_buleprint= Blueprint("basics",__name__,
                             template_folder='templates\FlaskBasics')
-
-def create():
-    p1=Post(title="Sriram's blog",description="sriram@dvb.com is his email")
-    user1=User.query.get(1)
-    print(user1.id)
-    p1.user_id=user1.id
-    db.session.add(p1)
-    db.session.commit()
-    return "Success"
+with app.app_context():
+    print(dir(app))
+    print(app.blueprints)
+    print(current_app)
+    print(current_app.name)
+# def create():
+#     # p1=Post(title="Sriram's blog",description="sriram@dvb.com is his email")
+#     # user1=User.query.get(1)
+#     # print(user1.id)
+#     # p1.user_id=user1.id
+#     p1=User("Chivothboss","Chivo0007@gmail.com","Chivo@07")
+#     db.session.add(p1)
+#     db.session.commit()
+#     return "Success"
 # create()
 
+# print(User.query.filter_by(username="Chivothboss")[0].password)
+ 
+@basic_buleprint.route("/signin",methods=['GET','POST'])
+def Flasklogin():
+    if request.method=="POST":
+        username=request.form.get("username")
+        password=request.form.get("password")
+        try:
+            user=User.query.filter_by(username=username)[0]
+            if user.check_password(password):
+                login_user(user)
+                nexturl=request.args.get("next")
+                return redirect(nexturl or url_for("basics.showallposts",name=user.username))
+        except:
+            return redirect(url_for("basics.signup"))
+    return render_template("signin.html")
+    # # u1=User.query.get(1)
+    # login_user(u1)
+    # resp=make_response(redirect(url_for("basics.start",fname=u1.username)))
+    # resp.set_cookie('username',u1.username)
+    # return resp
+
+@basic_buleprint.route("/signout",methods=['GET','POST'])
+def logout():
+    logout_user()
+    return "Logged Out Successfully"
 
 @basic_buleprint.route("/signup",methods=['GET','POST'])
 def signup():
@@ -26,7 +57,10 @@ def signup():
             fname=form.Name.data
             session["name"]=fname
             session["email"]=form.Email.data
-            return redirect(url_for("basics.showallposts",name=fname))
+            u=User(username=fname,email=form.Email.data,password=form.password.data)
+            db.session.add(u)
+            db.session.commit()
+            return redirect(url_for("basics.start",fname=fname))
         else:
             pass
     resp=make_response(render_template("signup.html",form=form))
@@ -35,7 +69,15 @@ def signup():
 
 
 @basic_buleprint.route("/start/<string:fname>",methods=['GET','POST'])
+@login_required
 def start(fname):
+    try:
+        print(request.cookies.get("username"))
+        # print(session["user_id"])
+        print(session)
+        print(session["_user_id"])
+    except:
+        pass
     if request.method=="POST":
         list_of_ans=request.form.getlist("lang")
         print(list_of_ans)
@@ -45,6 +87,7 @@ def save():
     return url_for("home")
 
 @basic_buleprint.route("/<string:name>/allposts",methods=['GET','POST'])
+@login_required
 def showallposts(name):
     form=postform()
     if request.method=="POST":
